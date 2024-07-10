@@ -6,8 +6,8 @@
           content="width=device-width, initial-scale=1.0">
     <title>Яндекс.Дом</title>
     <link rel="preload" as="font" href="assets/lato.woff2" type="font/woff2" crossorigin="anonymous">
-    <script async src="vendors/react-with-dom.js"></script>
-    <link rel="stylesheet" type="text/css" href="reset.css">
+    <script defer src="vendors/react-with-dom.js"></script>
+    <link rel="preload" as="style" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
@@ -36,7 +36,7 @@
 </footer>
 
 <script src="vendors/babel.min.js"></script>
-<script type="text/babel">
+<script defer type="text/babel">
     function Header() {
         let [expanded, setExpanded] = React.useState(false);
         let [toggled, setToggled] = React.useState(false);
@@ -231,7 +231,6 @@
 
         React.useEffect(() => {
             const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-            const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
 
             const newHasRightScroll = sumWidth > ref.current.offsetWidth;
             if (newHasRightScroll !== hasRightScroll) {
@@ -398,13 +397,15 @@
         </main>;
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('app'));
-    root.render(
-        <>
-            <Header/>
-            <Main/>
-        </>
-    );
+    document.addEventListener('DOMContentLoaded', () => {
+        const root = ReactDOM.createRoot(document.getElementById('app'));
+        root.render(
+            <>
+                <Header/>
+                <Main/>
+            </>
+        );
+    })
 </script>
 
 </body>
