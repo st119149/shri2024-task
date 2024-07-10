@@ -6,7 +6,7 @@
           content="width=device-width, initial-scale=1.0">
     <title>Яндекс.Дом</title>
     <link rel="preload" as="font" href="assets/lato.woff2" type="font/woff2" crossorigin="anonymous">
-    <script src="vendors/react-with-dom.js"></script>
+    <script async src="vendors/react-with-dom.js"></script>
     <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
@@ -73,19 +73,20 @@
     function Event(props) {
         const ref = React.useRef();
 
-        const { onSize } = props;
+        const {onSize} = props;
 
         React.useEffect(() => {
             const width = ref.current.offsetWidth;
             const height = ref.current.offsetHeight;
             if (onSize) {
-                onSize({ width, height });
+                onSize({width, height});
             }
         });
 
         return <li ref={ref} className={'event' + (props.slim ? ' event_slim' : '')}>
             <button className="event__button">
-                <span className={`event__icon event__icon_${props.icon}`} role="img" aria-label={props.iconLabel}></span>
+                <span className={`event__icon event__icon_${props.icon}`} role="img"
+                      aria-label={props.iconLabel}></span>
                 <h4 className="event__title">{props.title}</h4>
                 {props.subtitle &&
                     <span className="event__subtitle">{props.subtitle}</span>
@@ -239,6 +240,7 @@
         });
 
         const onArrowCLick = () => {
+            //todo: panelref
             const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
             if (scroller) {
                 scroller.scrollTo({
@@ -373,7 +375,10 @@
 
                 <div className="section__panel-wrapper" ref={ref}>
                     {TABS_KEYS.map(key =>
-                        <div key={key} role="tabpanel" className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')} aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`} aria-labelledby={`tab_${key}`}>
+                        <div key={key} role="tabpanel"
+                             className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')}
+                             aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`}
+                             aria-labelledby={`tab_${key}`}>
                             <ul className="section__panel-list">
                                 {TABS[key].items.map((item, index) =>
                                     <Event
@@ -393,15 +398,13 @@
         </main>;
     }
 
-    setTimeout(() => {
-        const root = ReactDOM.createRoot(document.getElementById('app'));
-        root.render(
-            <>
-                <Header />
-                <Main />
-            </>
-        );
-    }, 100);
+    const root = ReactDOM.createRoot(document.getElementById('app'));
+    root.render(
+        <>
+            <Header/>
+            <Main/>
+        </>
+    );
 </script>
 
 </body>
